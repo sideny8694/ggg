@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.ResourcesMapper">
+
+    <resultMap type="Resources" id="ResourcesResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="formatType"    column="format_type"    />
+        <result property="category"    column="category"    />
+        <result property="subjectPic"    column="subject_pic"    />
+        <result property="title"    column="title"    />
+        <result property="describes"    column="describes"    />
+        <result property="tags"    column="tags"    />
+        <result property="url"    column="url"    />
+        <result property="refUrl"    column="ref_url"    />
+        <result property="content"    column="content"    />
+        <result property="refs"    column="refs"    />
+        <result property="duration"    column="duration"    />
+        <result property="forCourse"    column="for_course"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="detailsId"    column="detailsId"    />
+    </resultMap>
+
+    <sql id="selectResourcesVo">
+        select id, name, type, format_type, category, subject_pic, title, describes, tags, url, ref_url, content, refs, duration, for_course, create_by, create_time, update_by, update_time from resources
+    </sql>
+
+    <select id="selectResourcesList" parameterType="Resources" resultMap="ResourcesResult">
+        <include refid="selectResourcesVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="formatType != null "> and format_type = #{formatType}</if>
+            <if test="category != null  and category != ''">
+                and
+                <foreach collection="category.split(',')" open="(" separator="or" close=")" item="c">
+                    find_in_set(#{c},category)
+                </foreach>
+            </if>
+            <if test="subjectPic != null  and subjectPic != ''"> and subject_pic = #{subjectPic}</if>
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="describes != null  and describes != ''"> and describes = #{describes}</if>
+            <if test="tags != null  and tags != ''">
+                and
+                <foreach collection="tags.split(',')" open="(" separator="or" close=")" item="t" >
+                    find_in_set(#{t},tags)
+                </foreach>
+            </if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="refUrl != null  and refUrl != ''"> and ref_url = #{refUrl}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="refs != null "> and refs = #{refs}</if>
+            <if test="duration != null "> and duration = #{duration}</if>
+            <if test="forCourse != null  and forCourse != ''"> and for_course = #{forCourse}</if>
+        </where>
+    </select>
+
+    <select id="selectResourcesById" parameterType="Long" resultMap="ResourcesResult">
+        <include refid="selectResourcesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertResources" parameterType="Resources" useGeneratedKeys="true" keyProperty="id">
+        insert into resources
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null">type,</if>
+            <if test="formatType != null">format_type,</if>
+            <if test="category != null and category != ''">category,</if>
+            <if test="subjectPic != null">subject_pic,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="describes != null">describes,</if>
+            <if test="tags != null and tags != ''">tags,</if>
+            <if test="url != null">url,</if>
+            <if test="refUrl != null">ref_url,</if>
+            <if test="content != null">content,</if>
+            <if test="refs != null">refs,</if>
+            <if test="duration != null">duration,</if>
+            <if test="forCourse != null and forCourse != ''">for_course,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="formatType != null">#{formatType},</if>
+            <if test="category != null and category != ''">#{category},</if>
+            <if test="subjectPic != null">#{subjectPic},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="describes != null">#{describes},</if>
+            <if test="tags != null and tags != ''">#{tags},</if>
+            <if test="url != null">#{url},</if>
+            <if test="refUrl != null">#{refUrl},</if>
+            <if test="content != null">#{content},</if>
+            <if test="refs != null">#{refs},</if>
+            <if test="duration != null">#{duration},</if>
+            <if test="forCourse != null and forCourse != ''">#{forCourse},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateResources" parameterType="Resources">
+        update resources
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="formatType != null">format_type = #{formatType},</if>
+            <if test="category != null and category != ''">category = #{category},</if>
+            <if test="subjectPic != null">subject_pic = #{subjectPic},</if>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="describes != null">describes = #{describes},</if>
+            <if test="tags != null and tags != ''">tags = #{tags},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="refUrl != null">ref_url = #{refUrl},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="refs != null">refs = #{refs},</if>
+            <if test="duration != null">duration = #{duration},</if>
+            <if test="forCourse != null and forCourse != ''">for_course = #{forCourse},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteResourcesById" parameterType="Long">
+        delete from resources where id = #{id}
+    </delete>
+
+    <delete id="deleteResourcesByIds" parameterType="String">
+        delete from resources where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectResourcesListByCourseDetail" parameterType="CourseDetails" resultMap="ResourcesResult" >
+        SELECT
+            r.*,
+            d.id AS detailsId
+        FROM resources r,
+             course_details d
+        WHERE d.resource_id = r.id
+          AND d.course_id = #{courseId}
+          AND d.parent_id = #{parentId}
+    </select>
+</mapper>

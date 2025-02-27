@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('课程管理列表')" />
+    <th:block th:include="include :: bootstrap-select-css" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <input type="hidden" id="channel" name="channel" th:value="${channel}">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>课程名称：</label>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label>所属分类：</label>
+                                <select is="category" name="category"  multiple class="selectpicker show-tick" title="请选择分类" data-live-search="false">
+                                    <option th:each="category : ${categoryList}" th:text="${category.name}" th:value="${category.name}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>标签列表：</label>
+                                <select id="tags" name="tags" multiple class="selectpicker show-tick" title="请选择标签" data-live-search="false">
+                                    <option th:each="tag : ${tagsList}" th:text="${tag.name}" th:value="${tag.name}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group" th:if="${channel eq '0'}">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="resources:course:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="resources:course:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="resources:course:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="resources:course:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+     <th:block th:include="include :: bootstrap-select-js" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('resources:course:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('resources:course:remove')}]];
+        var categoryDatas = [[${@dict.getType('resource_type')}]];
+        var tagsDatas = [[${@dict.getType('format_type')}]];
+        var prefix = ctx + "resources/course";
+        var showFlag = [[${channel eq '0'}]]
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "课程管理",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: 'ID',
+                    visible: false
+                },
+                {
+                    field: 'name',
+                    title: '课程名称'
+                },
+                {
+                    field: 'category',
+                    title: '所属分类'
+                },
+                {
+                    field: 'tags',
+                    title: '标签列表'
+                },
+                {
+                    field: 'subjectUrl',
+                    title: '主题图片',
+                    formatter: function(value, row, index) {
+                        return formatShow(value, row);
+                    }
+                },
+                {
+                    field: 'describes',
+                    title: '描述'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        if(showFlag) {
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="configResources(\'' + row.id + '\')"><i class="fa fa-edit"></i>配置资源</a> ');
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="configStudents(\'' + row.id + '\')"><i class="fa fa-edit"></i>添加学生</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="removeCourse(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        }else {
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="findResources(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看课程资源</a> ');
+                        }
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+
+        function formatShow(value, row) {
+            return "<a href='"+value+"' target='_blank'><img src='"+value+"' style='width: 50px;height: 50px'/></a>"
+        }
+
+
+        // 配置资源
+
+        function configResources(courseId) {
+            var uri = prefix + "/configResources?courseId=" + courseId;
+            var options = {
+                title: '配置资源',
+                url: uri,
+                callBack: finishConfigResources
+            };
+            $.modal.openOptions(options);
+        }
+
+        function finishConfigResources(index, layero) {
+            $.modal.close(index);
+        }
+
+        // 配置学生
+        function configStudents(courseId) {
+            var uri = prefix + "/configStudents?courseId=" + courseId;
+            var options = {
+                title: '配置学生',
+                url: uri,
+                callBack: finishConfigStudents,
+                callBackParams:courseId
+            };
+            $.modal.openOptions(options);
+        }
+
+        function finishConfigStudents(index, layero,courseId) {
+            var rows = layero.find("iframe")[0].contentWindow.getSelections();
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            var courseUsers = {
+                "courseId":courseId,
+                "usersIds":rows
+            }
+            $.operate.post(prefix+"/saveConfigUsers",courseUsers,function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.close(index);
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                }  else {
+                    $.modal.alertError(result.msg);
+                }
+            })
+        }
+
+        // 学习中心 查看课程资源
+        function findResources(courseId) {
+            var uri = prefix + "/configResources?courseId=" + courseId+"&channel="+$("#channel").val();
+            var options = {
+                title: '配置资源',
+                url: uri,
+                callBack: finishFindResources
+            };
+            $.modal.openOptions(options);
+        }
+
+        function finishFindResources(index, layero) {
+            $.modal.close(index);
+        }
+
+        // 删除课程
+        function removeCourse(courseId) {
+            var canDel = true;
+            var myajax = $.ajax({
+                url:ctx+"resources/course_users/list",
+                type:"post",
+                data:{"courseIdStr":courseId},
+                dataType:"json",
+                success:function (result) {
+                    if (result.code == web_status.SUCCESS) {
+                        if(!$.common.isEmpty(result.rows)) {
+                            canDel = false;
+                        }
+                    } else if (result.code == web_status.WARNING) {
+                        $.modal.alertWarning(result.msg)
+                    }  else {
+                        $.modal.alertError(result.msg);
+                    }
+                }
+            });
+            $.when(myajax).done(function () {
+                if(canDel) {
+                    $.operate.post(prefix + "/remove",{"ids":courseId},function (re) {
+                        if (re.code == web_status.SUCCESS) {
+                            // 刷新表格
+                            $.table.refresh()
+                        }
+                    })
+                }else {
+                    $.modal.alertWarning("已有用户添加到该课程,无法删除!")
+                }
+
+            });
+        }
+    </script>
+</body>
+</html>

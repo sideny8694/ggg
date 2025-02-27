@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('配置资源')" />
+</head>
+<body>
+<div class="container-div">
+    <div th:if="${channel eq '1'}">
+        <form id="add-chapter-form" class="form-horizontal">
+            <!--课程id-->
+            <input type="hidden" name="courseId" id="courseId" th:value="${courseId}">
+        </form>
+    </div>
+    <div style="margin-top: 50px" th:if="${channel eq '0'}">
+        <form id="add-chapter-form" class="form-horizontal">
+            <!--课程id-->
+            <input type="hidden" name="courseId" id="courseId" th:value="${courseId}">
+            <input type="hidden" name="parentId" id="parentId" value="0">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label ">添加章节：</label>
+                <div class="col-sm-4">
+                    <input id="title" name="title" placeholder="请输入章节标题" class="form-control" type="text">
+                </div>
+
+                <div class="col-sm-4">
+                    <textarea id="remark" name="remark" placeholder="请输入章节说明" class="form-control" style="height: 31px"  ></textarea>
+                </div>
+
+                <div class="col-sm-2">
+                    <a class="btn btn-warning" onclick="addDetailRow()" >
+                        <i class="fa"></i> 添加章节
+                    </a>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+    <!--父子表格 -->
+    <div class="row">
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
+        </div>
+    </div>
+</div>
+
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+
+        var typeDatas = [[${@dict.getType('resource_type')}]];
+        var formatTypeDatas = [[${@dict.getType('format_type')}]];
+        var prefix = ctx + "resources/course";
+        var showFlag = [[${channel eq '0'}]]
+        $(function () {
+            var options = {
+                method:"get",
+                url: prefix + "/chapterList",
+                removeUrl: prefix + "/removeChapter",
+                modalName: "配置资源",
+                showSearch: false,
+                showRefresh: false,
+                showToggle: false,
+                showColumns: false,
+                detailView: true,
+                onExpandRow : function(index, row, $detail) {
+                    initChildResourceTable(index, row, $detail);
+                },
+                columns: [{
+                     checkbox: true
+                    },
+                    {
+                        field : 'id',
+                        title : 'ID',
+                        visible: false
+                    },
+                    {
+                        field : 'parentId',
+                        title : '父ID',
+                        visible: false
+                    },
+                    {
+                        field : 'title',
+                        title : '标题'
+                    },
+                    {
+                        field : 'remark',
+                        title : '说明'
+                    },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        formatter: function(value, row, index) {
+                            var actions = [];
+                            if (showFlag) {
+                                actions.push('<a class="btn btn-success btn-xs" href="javascript:void(0)" onclick="addResource(\'' + row.id + '\',\''+row.courseId+'\')"><i class="fa fa-edit"></i>添加资源</a> ');
+                                actions.push('<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                            }
+                            return actions.join('');
+                        }
+                    }]
+            };
+            $.table.init(options);
+        });
+
+        function addDetailRow() {
+
+            // 添加章节
+            $.operate.post(prefix+"/addDetail",$("#add-chapter-form").serialize(),function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    // 成功
+                    var courseDetails = result.data;
+                    // 添加表格行
+                    addRowAfterInsert(courseDetails);
+                    // 清空表单填写项
+                    $("#title").val("")
+                    $("#remark").val("")
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                }  else {
+                    $.modal.alertError(result.msg);
+                }
+            })
+        }
+
+        function addRowAfterInsert(courseDetails) {
+            var tableId  = "bootstrap-table";
+            var count = $("#" + tableId  ).bootstrapTable('getData').length;// 表格序号
+            var row = {
+                //index: $.table.serialNumber(count,tableId),
+                id: courseDetails.id,
+                parentId:courseDetails.parentId,
+                title: courseDetails.title,
+                remark: courseDetails.remark,
+            }
+            $("#" + tableId).bootstrapTable('insertRow', { index: count + 1, row: row });
+            //sub.addRow(row,tableId);
+        }
+
+
+        function initChildResourceTable(index, row, $detail) {
+            var tableId = "table-"+row.courseId+"-"+row.id;
+            var childTable = $detail.html('<table style="table-layout:fixed" id="'+tableId+'"></table>').find('table');
+            $(childTable).bootstrapTable({
+                url: prefix + "/queryResources",
+                //removeUrl: ctx + "resources/course_details/remove",
+                method: 'post',
+                sidePagination: "server",
+                contentType: "application/x-www-form-urlencoded",
+                queryParams : {
+                    courseId: row.courseId,
+                    parentId:row.id,
+                },
+                columns: [
+                   /* {
+                        field : 'id',
+                        title : 'ID',
+                        visible: false
+                    },*/
+                    {
+                        field : 'name',
+                        title : '资源名称'
+                    },
+                    {
+                        field: 'type',
+                        title: '资源类型',
+                        formatter: function(value, row, index) {
+                            return $.table.selectDictLabel(typeDatas, value);
+                        }
+                    },
+                    {
+                        field: 'formatType',
+                        title: '格式类型',
+                        formatter: function(value, row, index) {
+                            return $.table.selectDictLabel(formatTypeDatas, value);
+                        }
+                    },
+                    {
+                        field: 'category',
+                        title: '所属分类'
+                    },
+                    {
+                        field: 'tags',
+                        title: '标签列表'
+                    },
+                    {
+                        field: 'title',
+                        title: '资源标题'
+                    },
+                    {
+                        field: 'subjectPic',
+                        title: '主题图片',
+                        formatter: function(value, row, index) {
+                            return formatShow(value, row,"1");
+                        }
+                    },
+                    {
+                        field: 'describes',
+                        title: '描述'
+                    },
+                    {
+                        field: 'url',
+                        title: '资源地址',
+                        formatter: function(value, row, index) {
+                            return formatShow(value, row);
+                        }
+                    },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        formatter: function(value, r, index) {
+                            var value = $.common.isNotEmpty(r.index) ? r.index : $.table.serialNumber(index,tableId);
+                            var actions = []; // $.operate.remove
+                            if (showFlag) {
+                                actions.push('<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="removeSingleDetail(\'' + r.detailsId + '\',\''+row.courseId+'\',\''+row.id+'\',\''+value+'\')"><i class="fa fa-remove"></i>删除</a>');
+                            }
+                            return actions.join('');
+                        }
+                    }]
+            });
+        };
+
+        function formatShow(value, row,type) {
+            if(type == "1") {
+                // getExtension
+                var extension = getFileExtension(value);
+                if (extension == "png" || extension == "jpg" || extension == "webp" || extension == "jpeg") {
+                    return "<a href='"+value+"' target='_blank'><img src='"+value+"' style='width: 50px;height: 50px'/></a>"
+                }
+            }
+            // 图片
+            if (row.formatType == 12 || row.formatType == 13 || row.formatType == 14 || row.formatType == 15) {
+                return "<a href='"+value+"' target='_blank'><img src='"+value+"' style='width: 50px;height: 50px'/></a>"
+            }
+            // 视频
+            if (row.formatType == 6 || row.formatType == 7 || row.formatType == 8 || row.formatType == 9 || row.formatType == 10 || row.formatType == 11 ) {
+                return "<a href='"+value+"' target='_blank'><video src='"+value+"' height='50px' width='50px' controls > </video></a>"
+            }
+
+            return "<a href='"+row.url+"' target='_blank'>"+row.title+"</a>";
+            // alert(value +"---" + JSON.stringify(row))
+        }
+
+        function getFileExtension(fileName) {
+            var extStart = fileName.lastIndexOf('.');
+            return extStart > -1 ? fileName.slice(extStart + 1) : '';
+        }
+
+
+        function removeSingleDetail(detailId,courseId,parentId,rowIndex) {
+            $.operate.post(prefix + "/removeDetail",{"detailId":detailId},function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    // 成功 刷新表格
+                    var tableId = "table-"+courseId+"-"+parentId;
+                    // $.table.refresh(tableId);
+                    // sub.delRowByIndex(rowIndex,tableId);
+                    $("#" + tableId).bootstrapTable('remove', { field: "index", values: [rowIndex] });
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                }  else {
+                    $.modal.alertError(result.msg);
+                }
+            })
+        }
+
+
+        function addResource(detailId,courseId) {
+            var prefix = ctx + "resources/resource";
+            var options = {
+                title: '选择资源',
+                url: prefix+"?configFlag=1" ,
+                callBack: finishSelectResources,
+                callBackParams:{
+                    "detailId":detailId,
+                    "courseId":courseId
+                }
+            };
+            $.modal.openOptions(options);
+        }
+
+        function finishSelectResources(index, layero,callBackParams){
+            // var body = $.modal.getChildFrame(index);
+            // var type = body.find('#queryType').val()
+            // 获取选择的试题编号集合
+            var rows = layero.find("iframe")[0].contentWindow.getSelections();
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            var courseDetail = {
+                "parentId":callBackParams.detailId,
+                "courseId":callBackParams.courseId,
+                "resourceIds":rows,
+            }
+            $.operate.post(prefix+"/saveConfigDetails",courseDetail,function (result) {
+                if (result.code == web_status.SUCCESS) {
+                    $.modal.close(index);
+                } else if (result.code == web_status.WARNING) {
+                    $.modal.alertWarning(result.msg)
+                }  else {
+                    $.modal.alertError(result.msg);
+                }
+            })
+        }
+    </script>
+</body>
+</html>

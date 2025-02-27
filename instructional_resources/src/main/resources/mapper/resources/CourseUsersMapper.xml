@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CourseUsersMapper">
+
+    <resultMap type="CourseUsers" id="CourseUsersResult">
+        <result property="id"    column="id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="usersId"    column="users_id"    />
+        <result property="courseName"    column="courseName"    />
+        <result property="userName"    column="userName"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCourseUsersVo">
+        select id, course_id, users_id, create_by, create_time, update_by, update_time from course_users
+    </sql>
+
+    <select id="selectCourseUsersList" parameterType="CourseUsers" resultMap="CourseUsersResult">
+        SELECT
+        cu.*,
+        c.name AS courseName,
+        u.user_name AS userName
+        FROM course_users cu,
+        course c,
+        sys_user u
+        <where>
+            cu.course_id = c.id
+            AND cu.users_id = u.user_id
+            <if test="courseIdStr != null  and courseIdStr != ''">
+                and
+                <foreach collection="courseIdStr.split(',')" open="(" separator="or" close=")" item="t" >
+                    find_in_set(#{t},cu.course_id)
+                </foreach>
+            </if>
+            <if test="usersIdStr != null  and usersIdStr != ''">
+                and
+                <foreach collection="usersIdStr.split(',')" open="(" separator="or" close=")" item="t" >
+                    find_in_set(#{t},cu.users_id)
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCourseUsersById" parameterType="Long" resultMap="CourseUsersResult">
+        <include refid="selectCourseUsersVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCourseUsers" parameterType="CourseUsers" useGeneratedKeys="true" keyProperty="id">
+        insert into course_users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="usersId != null">users_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="usersId != null">#{usersId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourseUsers" parameterType="CourseUsers">
+        update course_users
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="usersId != null">users_id = #{usersId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCourseUsersById" parameterType="Long">
+        delete from course_users where id = #{id}
+    </delete>
+
+    <delete id="deleteCourseUsersByIds" parameterType="String">
+        delete from course_users where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

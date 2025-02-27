@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="683c3657-c124-45ee-b337-78dfb7784f48" name="Default Changelist" comment="数字化教学资源管理系统初始提交">
+      <change afterPath="$PROJECT_DIR$/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/controller/CategoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/controller/CourseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/controller/CourseDetailsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/controller/CourseUsersController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/controller/ResourcesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/controller/TagsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/domain/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/domain/Course.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/domain/CourseDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/domain/CourseUsers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/domain/Resources.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/domain/Tags.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/mapper/CategoryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/mapper/CourseDetailsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/mapper/CourseMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/mapper/CourseUsersMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/mapper/ResourcesMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/mapper/TagsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/ICategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/ICourseDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/ICourseService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/ICourseUsersService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/IResourcesService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/ITagsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/impl/CategoryServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/impl/CourseDetailsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/impl/CourseServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/impl/CourseUsersServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/impl/ResourcesServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/resources/service/impl/TagsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/resources/CategoryMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/resources/CourseDetailsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/resources/CourseMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/resources/CourseUsersMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/resources/ResourcesMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/resources/TagsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/ai-assistant.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/category/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/category/category.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/category/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course/config_resources.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course/course.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course_details/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course_details/course_details.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course_details/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course_users/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course_users/course_users.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/course_users/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/resource/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/resource/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/resource/resource.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/tags/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/tags/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/resources/tags/tags.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prize_2024-01-03.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ruoyi/common/core/domain/entity/SysUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/common/core/domain/entity/SysUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ruoyi/framework/config/ShiroConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/framework/config/ShiroConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ruoyi/framework/shiro/service/SysRegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/framework/shiro/service/SysRegisterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ruoyi/web/controller/system/SysIndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/web/controller/system/SysIndexController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ruoyi/web/controller/system/SysUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ruoyi/web/controller/system/SysUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-druid.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-druid.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/generator.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generator.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/system/SysUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/system/SysUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/login.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/login.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/ruoyi/css/ry-ui.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ruoyi/css/ry-ui.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/ruoyi/js/ry-ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/ruoyi/js/ry-ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/demo/form/summernote.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/demo/form/summernote.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/system/user/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/system/user/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/system/user/authRole.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/system/user/authRole.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/system/user/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/system/user/user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/vm/sql/sql.vm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/vm/sql/sql.vm" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="online-exam" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$PROJECT_DIR$/../../../developer/Maven/apache-maven-3.6.3" />
+        <option name="userSettingsFile" value="C:\developer\Maven\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="#JAVA_HOME" />
+  </component>
+  <component name="ProjectId" id="2ca86irysMbLiGGnFpzYSSpYGka" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "WebServerToolWindowFactoryState": "false",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/LENOVO/Desktop/毕设/二次开发加API/instructional_resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "8ec271ff0258edb9dbf9ac8ba83ab0b5",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\itheima\bs\instructional_resources\init" />
+      <recent name="C:\itheima\bs\instructional_resources\src\main\resources\templates\resources\course" />
+      <recent name="C:\itheima\bs\instructional_resources\src\main\java\com\ruoyi\resources\domain" />
+      <recent name="C:\itheima\bs\instructional_resources\src\main\resources\mapper\resources" />
+      <recent name="C:\itheima\bs\online-exam\init" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ruoyi.exam.controller" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="instructional_resources" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.Application" />
+      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.Application" />
+        <item itemvalue="Spring Boot.Application" />
+        <item itemvalue="Spring Boot.Application" />
+        <item itemvalue="Spring Boot.Application" />
+        <item itemvalue="Spring Boot.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="683c3657-c124-45ee-b337-78dfb7784f48" name="Default Changelist" comment="" />
+      <created>1708338157158</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1708338157158</updated>
+      <workItem from="1708338158335" duration="170000" />
+      <workItem from="1708338345987" duration="36000" />
+      <workItem from="1708338400396" duration="18737000" />
+      <workItem from="1708475188371" duration="8632000" />
+      <workItem from="1708484214128" duration="33697000" />
+      <workItem from="1708561640830" duration="38646000" />
+      <workItem from="1708648575185" duration="30034000" />
+      <workItem from="1708697219859" duration="8705000" />
+      <workItem from="1708908376702" duration="139000" />
+      <workItem from="1708910037193" duration="5014000" />
+      <workItem from="1708941520721" duration="72415000" />
+      <workItem from="1709174362600" duration="174000" />
+      <workItem from="1740560518165" duration="117000" />
+      <workItem from="1740560876593" duration="51000" />
+      <workItem from="1740560966612" duration="21125000" />
+      <workItem from="1740624826714" duration="574000" />
+      <workItem from="1740625424474" duration="6829000" />
+    </task>
+    <task id="LOCAL-00001" summary="1，删除lotty&#10;2，去掉minio相关">
+      <created>1708401092420</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1708401092420</updated>
+    </task>
+    <task id="LOCAL-00002" summary="1，删除lotty 页面">
+      <created>1708401381623</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1708401381623</updated>
+    </task>
+    <task id="LOCAL-00003" summary="【完成在线考试系统核心功能】&#10; 1,添加,修改试题&#10; 2,添加,修改试卷&#10; 3,启用试卷,给关联的考试发放考试计划&#10; 4,添加系统考生用户&#10; 5,考生登录查看自己的考试计划&#10; 6,考生考试并提交试卷&#10; 7,后台查看考生提交的试卷并阅卷,阅卷完成后更新计划,统计分数">
+      <created>1708678576345</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1708678576345</updated>
+    </task>
+    <task id="LOCAL-00004" summary="【修复bug,添加脚本】">
+      <created>1708705682344</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1708705682344</updated>
+    </task>
+    <task id="LOCAL-00005" summary="数字化教学资源管理系统初始提交">
+      <created>1708947341585</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708947341585</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="1，删除lotty&#10;2，去掉minio相关" />
+    <MESSAGE value="1，删除lotty 页面" />
+    <MESSAGE value="【完成在线考试系统核心功能】&#10; 1,添加,修改试题&#10; 2,添加,修改试卷&#10; 3,启用试卷,给关联的考试发放考试计划&#10; 4,添加系统考生用户&#10; 5,考生登录查看自己的考试计划&#10; 6,考生考试并提交试卷&#10; 7,后台查看考生提交的试卷并阅卷,阅卷完成后更新计划,统计分数" />
+    <MESSAGE value="【修复bug,添加脚本】" />
+    <MESSAGE value="数字化教学资源管理系统初始提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="数字化教学资源管理系统初始提交" />
+  </component>
+</project>

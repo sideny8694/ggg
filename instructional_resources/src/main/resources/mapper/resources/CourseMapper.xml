@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.resources.mapper.CourseMapper">
+
+    <resultMap type="Course" id="CourseResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="category"    column="category"    />
+        <result property="subjectUrl"    column="subject_url"    />
+        <result property="tags"    column="tags"    />
+        <result property="describes"    column="describes"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCourseVo">
+        select id, name, category, subject_url, tags, describes, create_by, create_time, update_by, update_time from course
+    </sql>
+
+    <select id="selectCourseList" parameterType="Course" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        <where>
+            <if test="ids != null  and ids != ''">
+                and id in
+                <foreach collection="ids.split(',')" open="(" separator="," close=")" item="i">
+                    #{i}
+                </foreach>
+            </if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="category != null  and category != ''">
+                and
+                <foreach collection="category.split(',')" open="(" separator="or" close=")" item="c">
+                    find_in_set(#{c},category)
+                </foreach>
+            </if>
+            <if test="tags != null  and tags != ''">
+                and
+                <foreach collection="tags.split(',')" open="(" separator="or" close=")" item="t" >
+                    find_in_set(#{t},tags)
+                </foreach>
+             </if>
+        </where>
+    </select>
+
+    <select id="selectCourseById" parameterType="Long" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="id">
+        insert into course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="category != null and category != ''">category,</if>
+            <if test="subjectUrl != null and subjectUrl != ''">subject_url,</if>
+            <if test="tags != null and tags != ''">tags,</if>
+            <if test="describes != null and describes != ''">describes,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="category != null and category != ''">#{category},</if>
+            <if test="subjectUrl != null and subjectUrl != ''">#{subjectUrl},</if>
+            <if test="tags != null and tags != ''">#{tags},</if>
+            <if test="describes != null and describes != ''">#{describes},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourse" parameterType="Course">
+        update course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="category != null and category != ''">category = #{category},</if>
+            <if test="subjectUrl != null and subjectUrl != ''">subject_url = #{subjectUrl},</if>
+            <if test="tags != null and tags != ''">tags = #{tags},</if>
+            <if test="describes != null and describes != ''">describes = #{describes},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCourseById" parameterType="Long">
+        delete from course where id = #{id}
+    </delete>
+
+    <delete id="deleteCourseByIds" parameterType="String">
+        delete from course where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
